@@ -1,8 +1,10 @@
 {% extends "base.html" %}
-{% block title %}Последние обновления на сайте{% endblock %}
-{% block header %}Последние обновления на сайте{% endblock %}
+{% block title %}Записи сообщества {{ group.title }} | Pikachu{% endblock %}
 {% block content %}
-
+    <h1>{{ group.title }}</h1>
+    <p>
+        {{ group.description }}
+    </p>
     {% for post in posts %}
         <h3>
             Автор: {{ post.author.get_full_name }}, Дата публикации: {{ post.pub_date|date:"d M Y" }}
@@ -12,5 +14,4 @@
             <hr>
         {% endif %}
     {% endfor %}
-
 {% endblock %}
