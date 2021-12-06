@@ -24,19 +24,26 @@ SECRET_KEY = 'django-insecure-nh435y=r1_19*tv!cie%^h76zc+)i1adkak+130+9td8v@tet=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "[::1]",
+    "testserver",
+]
 
 # Application definition
 
 INSTALLED_APPS = [
+    'users',
+    'posts',
+    'django.contrib.sites',
+    'django.contrib.flatpages',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'posts',
-    'users'
 ]
 
 MIDDLEWARE = [
@@ -130,3 +137,6 @@ LOGOUT_REDIRECT_URL = "index"
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
+
+# Идентификатор текущего сайта
+SITE_ID = 1
