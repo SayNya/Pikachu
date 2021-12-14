@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Профиль пользователя {{ author.get_full_name }} | Pikachu{% endblock %}
 {% block content %}
+    {% load thumbnail %}
     <main role="main" class="container">
         <div class="row">
             <div class="col-md-3 mb-3 mt-1">
@@ -25,36 +26,26 @@
                                 Записей: {{ paginator.count }}
                             </div>
                         </li>
+                        <li class="list-group-item">
+                            {% if following %}
+                                <a class="btn btn-lg btn-light"
+                                   href="{% url 'profile_unfollow' author.username %}" role="button">
+                                    Отписаться
+                                </a>
+                            {% else %}
+                                <a class="btn btn-lg btn-primary"
+                                   href="{% url 'profile_follow' author.username %}" role="button">
+                                    Подписаться
+                                </a>
+                            {% endif %}
+                        </li>
                     </ul>
                 </div>
             </div>
 
             <div class="col-md-9">
-
                 {% for post in page %}
-                    <div class="card mb-3 mt-1 shadow-sm">
-                        <div class="card-body">
-                            <p class="card-text">
-                                <a href={% url 'profile' author.username %}><strong
-                                        class="d-block text-gray-dark">@{{ author.username }}</strong></a>
-                                {{ post.text }}
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group ">
-                                    <a class="btn btn-sm text-muted" role="button"
-                                       href={% url 'post' author.username post.id %}>Добавить
-                                        комментарий</a>
-                                    {% ifequal user author %}
-                                        <a class="btn btn-sm text-muted" role="button"
-                                           href={% url 'post_edit' author.username post.id %}
-                                        >Редактировать</a>
-                                    {% endifequal %}
-                                </div>
-                                <!-- Дата публикации  -->
-                                <small class="text-muted">{{ post.pub_date }}</small>
-                            </div>
-                        </div>
-                    </div>
+                    {% include 'post_item.html' with post=post %}
                 {% endfor %}
                 {% if page.has_other_pages %}
                     {% include "paginator.html" with items=page paginator=paginator %}

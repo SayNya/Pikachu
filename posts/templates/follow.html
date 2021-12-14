@@ -1,10 +1,6 @@
 {% extends "base.html" %}
-{% block title %}Записи сообщества {{ group.title }} | Pikachu{% endblock %}
+{% block title %}Follow | Pikachu{% endblock %}
 {% block content %}
-    <h1>{{ group.title }}</h1>
-    <p>
-        {{ group.description }}
-    </p>
     {% for post in page %}
         {% include 'post_item.html' with post=post %}
     {% endfor %}
